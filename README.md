@@ -11,4 +11,10 @@ __A general view of the map:__
 ![image](https://github.com/MoiseyT/Cross-country-ski-trails-/assets/101183971/754f4827-3ecd-4cfa-ade7-d180b4db8238)
 __On the top right of the map you can choose which machines are used to prepare the track - ratrak or snowmobile.
 Also by clicking on each track or marker you can find information about the name, length, elevation, type of track preparation and a link to the track's website.__
+![image](https://github.com/MoiseyT/Cross-country-ski-trails-/assets/101183971/957546fe-0e8e-478a-97c7-caf007e16f3f)
+__Thus, this is the first project that has integrated Russian cross country ski tracks into (more then 400 tracks) a single layer. We are very happy that this map is used by many Russians and hope that we can improve it.__
+
+__(In addition, I want to share with you a wonderful plugin and a map that I created based on this plugin also using Leaflet. [Link to the map](https://skimsu.ru/?action=content&section=tracks&sub=bgazon)__
+![image](https://github.com/MoiseyT/Cross-country-ski-trails-/assets/101183971/351ea56b-830a-4ec7-98f1-ab78c9032bfa)
+
 
