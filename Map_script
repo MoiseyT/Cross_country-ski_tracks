@@ -1,0 +1,120 @@
+<script>
+
+    var map = L.map('map').setView([59, 82], 4);
+    //osm layer
+    var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    })
+    osm.addTo(map);
+    var CartoDB_DarkMatter = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 20
+    });
+    var Esri_WorldTopoMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+    });
+    //Esri_WorldTopoMap.addTo(map);
+
+    var WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+    });
+    //layer controller
+    var baseMaps = {
+        "OSM": osm,
+        "Спутник": WorldImagery,
+        "Dark": CartoDB_DarkMatter,
+        "World TopoMap": Esri_WorldTopoMap,
+    };
+    var secondMaps = {};
+    var Track = L.geoJSON(Skitrack,
+        {
+            // Add layer with tracks, add pop up
+            onEachFeature: function (feature, layer) {
+                popupOptions = {maxWidth: 10};
+                layer.bindPopup("<u><b>" + feature.properties.Name + "</u></b><br>" + 'Протяженность: <b>'+ feature.properties.Length +
+                    ' км</b><br>' + 'Набор высоты: <b>'+ feature.properties.Elevation + ' м</b><br>' + 'Подготовка: <b>'+ feature.properties.Prepare + '</b><br>'
+                    + 'Информация: <b>'+ feature.properties.info);
+            },
+            style: function(feature) {
+                switch (feature.properties.Landscape) {
+                    case 'Тяжелый': return {color: "#ff0000"};
+                    case 'Средний': return {color: "#ffff00"};
+                    case 'Легкий': return {color: "#0000ff"}
+                }
+            },
+            arrowheads: {yawn: 45, fill: true, frequency: '80px', size: '40%'},
+        })
+    // Adding the disappearance/appearance of the tracks layer.
+
+    // Adding a marker style setting based on the type of track difficulty
+    var SkiIcon = L.Icon.extend({
+        options: {
+            iconSize:     [26.4, 36], // size of the icon
+            iconAnchor:   [18, 36],   // point of the icon which will correspond to marker's location
+            popupAnchor:  [-5, -30] // point from which the popup should open relative to the iconAnchor
+        }
+    });
+    var IconHard = new SkiIcon({iconUrl: 'https://bitbucket.org/Moisey123/skitrack/downloads/hard.png'});
+    var IconMedium = new SkiIcon({iconUrl: 'https://bitbucket.org/Moisey123/skitrack/downloads/med.png'});
+    var IconLight = new SkiIcon({iconUrl: 'https://bitbucket.org/Moisey123/skitrack/downloads/easy.png'});
+
+    // adding classified markers
+    var Ratrack = L.geoJSON(Skimarker, {
+            onEachFeature: function (feature, layer) {
+                popupOptions = {maxWidth: 10};
+                
+                layer.bindPopup("<u><b>" + feature.properties.Name + "</u></b><br>" + 'Протяженность: <b>'+ feature.properties.Length +
+                    ' км</b><br>' + 'Набор высоты: <b>'+ feature.properties.Elevation + ' м</b><br>' + 'Подготовка: <b>'+ feature.properties.Prepare + '</b><br>'
+                    + 'Информация: <b>'+ feature.properties.info);
+            },
+            pointToLayer: function(feature, LatLng) {
+                let icon;
+                if(feature.properties.Prepare == 'Ратрак'){
+                switch (feature.properties.Landscape) {
+                    case 'Тяжелый': icon = IconHard; break;
+                    case 'Средний': icon = IconMedium; break;
+                    case 'Легкий': icon = IconLight; break;
+                }
+                return L.marker(LatLng, {icon: icon});
+            }
+            }
+        }
+    ).addTo(map);
+    var Snegohod = L.geoJSON(Skimarker, {
+            onEachFeature: function (feature, layer) {
+                popupOptions = {maxWidth: 10};
+                
+                layer.bindPopup("<u><b>" + feature.properties.Name + "</u></b><br>" + 'Протяженность: <b>'+ feature.properties.Length +
+                    ' км</b><br>' + 'Набор высоты: <b>'+ feature.properties.Elevation + ' м</b><br>' + 'Подготовка: <b>'+ feature.properties.Prepare + '</b><br>'
+                    + 'Информация: <b>'+ feature.properties.info);
+            },
+            pointToLayer: function(feature, LatLng) {
+                let icon;
+                if(feature.properties.Prepare == 'Снегоход'){
+                switch (feature.properties.Landscape) {
+                    case 'Тяжелый': icon = IconHard; break;
+                    case 'Средний': icon = IconMedium; break;
+                    case 'Легкий': icon = IconLight; break;
+                }
+                return L.marker(LatLng, {icon: icon});
+            }
+            }
+        }
+    ).addTo(map);
+    var prepare = {
+        "Ратрак": Ratrack,
+        "Снегоход": Snegohod,
+    };
+    L.control.layers(baseMaps).addTo(map);
+    L.control.layers(secondMaps, prepare, {collapsed : false}).addTo(map);
+    map.on("zoomend", function () {
+        var newMapZoom = map.getZoom();
+        if (newMapZoom >= 13) {
+            Track.addTo(map);
+        }
+        else {
+            Track.remove(map);
+        }
+    });
+</script>
