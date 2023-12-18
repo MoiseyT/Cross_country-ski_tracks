@@ -1,4 +1,4 @@
-# Interactive map of Russia's cross-country ski trails
+# Interactive map of Russia's cross-country ski trails :ski:
 __Cross country ski is considered one of the most popular sports in Russia, along with football and running. However, until now, there was no GIS project in Russia that could help find a suitable route for this beautiful winter sport. Link to the GIS project ["Russia's cross-country ski trails"](https://www.skisport.ru/ski-trail-map/)__
 ## Conceptual model
 __First of all I decided to look at existing projects. There are great projects in Switzerland, Norway, where you can find the information you need about the cross country ski tracks, see the difficulty of the track, for which style the track exists, and also find out when the last time a ratrak was on the track.
