@@ -58,7 +58,7 @@
     var secondMaps = {};
     var Track = L.geoJSON(Skitrack,
         {
-            // Вставляем слой с трассами, делаем всплывающее окно.
+            // Add layer with tracks, add pop up
             onEachFeature: function (feature, layer) {
                 popupOptions = {maxWidth: 10};
                 layer.bindPopup("<u><b>" + feature.properties.Name + "</u></b><br>" + 'Протяженность: <b>'+ feature.properties.Length +
@@ -74,9 +74,9 @@
             },
             arrowheads: {yawn: 45, fill: true, frequency: '80px', size: '40%'},
         })
-    // Добавляем исчезновение/появление слоя лыжных трасс при приближении/отдалении
+    // Adding the disappearance/appearance of the tracks layer.
 
-    // Добавляем настройку стиля маркеров по типу сложности рельефа
+    // Adding a marker style setting based on the type of track difficulty
     var SkiIcon = L.Icon.extend({
         options: {
             iconSize:     [26.4, 36], // size of the icon
@@ -88,7 +88,7 @@
     var IconMedium = new SkiIcon({iconUrl: 'https://bitbucket.org/Moisey123/skitrack/downloads/med.png'});
     var IconLight = new SkiIcon({iconUrl: 'https://bitbucket.org/Moisey123/skitrack/downloads/easy.png'});
 
-    // добавляем классифицированные маркеры
+    // adding classified markers
     var Ratrack = L.geoJSON(Skimarker, {
             onEachFeature: function (feature, layer) {
                 popupOptions = {maxWidth: 10};
