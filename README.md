@@ -15,6 +15,7 @@ Also by clicking on each track or marker you can find information about the name
 __Thus, this is the first project that has integrated Russian cross country ski tracks into (more then 400 tracks) a single layer. We are very happy that this map is used by many Russians and hope that we can improve it.__
 
 __(In addition, I want to share with you a wonderful plugin and a map that I created based on this plugin also using Leaflet. [Link to the map](https://skimsu.ru/?action=content&section=tracks&sub=bgazon)__
+
 ![image](https://github.com/MoiseyT/Cross-country-ski-trails-/assets/101183971/351ea56b-830a-4ec7-98f1-ab78c9032bfa)
 
 
